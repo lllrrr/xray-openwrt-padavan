@@ -4,9 +4,6 @@ on:
   push:
     tags:
       - v*
-  watch:                  #点star触发
-    types: started
-
 
 jobs:
   build:
@@ -32,7 +29,7 @@ jobs:
           cd Xray-core
           git checkout tags/v24.12.18
           cd ..
-          wget https://raw.githubusercontent.com/lllrrr/xray-openwrt-padavan/master/build.sh
+          wget https://raw.githubusercontent.com/felix-fly/xray-openwrt/master/build.sh
           chmod +x ./build.sh
           ./build.sh android arm64
           ./build.sh darwin amd64
@@ -47,7 +44,9 @@ jobs:
           ./build.sh linux mips64
           ./build.sh linux mips64le
       - name: Upload artifact
-        uses: actions/upload-artifact@master
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          name: build
-          path: /bin/*.tar.gz
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            bin/*.tar.gz
