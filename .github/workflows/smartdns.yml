@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - Release*
+  watch:                  #点star触发
+    types: started
 
 jobs:
   build:
@@ -54,4 +56,4 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: |
-          path: /opt/bin/*
+            /opt/bin/*
