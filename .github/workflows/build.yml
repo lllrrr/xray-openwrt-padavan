@@ -1,4 +1,4 @@
-name: build
+name: build xray
 
 on:
   push:
@@ -14,12 +14,12 @@ jobs:
           sudo apt update
           sudo rm -rf /usr/bin/go*
           sudo rm -rf /usr/local/go
-          wget https://dl.google.com/go/go1.22.5.linux-amd64.tar.gz -O go.tar.gz
+          wget https://dl.google.com/go/go1.23.4.linux-amd64.tar.gz -O go.tar.gz
           sudo tar -C /usr/local -xzf go.tar.gz
-          wget https://github.com/upx/upx/releases/download/v4.0.1/upx-4.0.1-amd64_linux.tar.xz
-          tar xf upx-4.0.1-amd64_linux.tar.xz
-          mv upx-4.0.1-amd64_linux/upx .
-          rm -rf upx-4.0.1-amd64_linux*
+          wget https://github.com/upx/upx/releases/download/v4.2.4/upx-4.2.4-amd64_linux.tar.xz
+          tar xf upx-4.2.4-amd64_linux.tar.xz
+          mv upx-4.2.4-amd64_linux/upx .
+          rm -rf upx-4.2.4-amd64_linux*
       - name: build
         run: |
           mkdir tmp
@@ -27,7 +27,7 @@ jobs:
           # Do not use "--depth=1" due to tags
           git clone https://github.com/XTLS/Xray-core.git
           cd Xray-core
-          git checkout tags/v1.8.24
+          git checkout tags/v24.12.18
           cd ..
           wget https://raw.githubusercontent.com/felix-fly/xray-openwrt/master/build.sh
           chmod +x ./build.sh
@@ -44,9 +44,7 @@ jobs:
           ./build.sh linux mips64
           ./build.sh linux mips64le
       - name: Upload artifact
-        uses: "marvinpinto/action-automatic-releases@latest"
+        uses: actions/upload-artifact@master
         with:
-          repo_token: "${{ secrets.UPLOAD_KEY }}"
-          prerelease: false
-          files: |
-            bin/*.tar.gz
+          name: build
+          path: /bin
