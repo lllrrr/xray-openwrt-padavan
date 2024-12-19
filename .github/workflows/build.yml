@@ -32,7 +32,7 @@ jobs:
           cd Xray-core
           git checkout tags/v24.12.18
           cd ..
-          wget https://raw.githubusercontent.com/lllrrr/xray-openwrt/master/build.sh
+          wget https://raw.githubusercontent.com/lllrrr/xray-openwrt-padavan/master/build.sh
           chmod +x ./build.sh
           ./build.sh android arm64
           ./build.sh darwin amd64
