@@ -2,11 +2,8 @@ name: build smartdns
 
 on:
   push:
-    branches: 
-      - smartdns
-  watch:                  #点star触发
-    types: started
-
+    tags:
+      - Release*
 
 jobs:
   build:
@@ -52,7 +49,9 @@ jobs:
           /tmp/upx --best --lzma /tmp/out/smartdns/usr/sbin/smartdns
           mv /tmp/out/smartdns/usr/sbin/smartdns /opt/bin/smartdns-min
       - name: Upload artifact
-        uses: actions/upload-artifact@master
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          name: build
-          path: /opt/bin
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+          path: /opt/bin/*
