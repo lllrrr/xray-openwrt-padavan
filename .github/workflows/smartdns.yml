@@ -4,6 +4,9 @@ on:
   push:
     branches: 
       - smartdns
+  watch:                  #点star触发
+    types: started
+
 
 jobs:
   build:
